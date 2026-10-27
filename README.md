@@ -71,8 +71,3 @@ Tests use an in-memory SQLite database and mocked Gemini, so no MySQL or paid AP
 - **AI**: Gemini is called only from the backend, with exact aggregates computed in SQL/Python (no raw descriptions, no full history). Insights are cached per user and flagged stale when the underlying numbers change (fingerprint); `GET` never calls Gemini, only **Refresh insights** does. Chat is read-only. Admin AI sees platform aggregates only.
 - **Exports** (CSV, XLSX, PDF) apply the same filters server-side, are limited to 20,000 rows per file, and neutralise spreadsheet formula injection. The PDF uses `Rs.` because built-in PDF fonts lack the ₹ glyph.
 - **Rate limiting** is in-memory, per process (login, register, AI, export); use a shared store if you run several workers.
-
-## Not yet done / worth knowing
-- Verified here against SQLite and a mocked Gemini. Run `alembic upgrade head` against your MySQL and try a real Gemini key; `GEMINI_MODEL` must be a model your key supports.
-- No automated browser (UI) tests; the frontend was verified by a production build only.
-- Admin Settings is read-only for application settings (by design: secrets stay in `.env`).
